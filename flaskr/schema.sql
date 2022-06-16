@@ -15,3 +15,13 @@ CREATE TABLE post (
   body TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
+
+CREATE TABLE wow_char (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  author_id INTEGER NOT NULL,
+  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  region TEXT NOT NULL,
+  realm TEXT NOT NULL,
+  char_name TEXT NOT NULL,
+  FOREIGN KEY (author_id) REFERENCES user (id)
+)
