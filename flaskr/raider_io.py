@@ -11,44 +11,44 @@ bp = Blueprint('raider_io', __name__)
 @bp.route('/raider_io')
 def index():
     db = get_db()
-    posts = db.execute(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
+    chars = db.execute(
+        'SELECT p.id, region, realm, char_name, score'
+        ' FROM wow_char p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
-    ).fetchall()
-    return render_template('raider_io/index.html', posts=posts)
-#
-# @bp.route('/raider_io')
-# def index():
-#     db = get_db()
-#     posts = db.execute(
-#         'SELECT region, realm, character'
-#         ).fetchall()
-#     return render_template('raider_io/index.html', posts=posts)
-#
-
+        ).fetchall()
+    return render_template('raider_io/index.html', wow_chars=chars)
 
 @bp.route('/raider_io/new', methods=('GET', 'POST'))
 @login_required
-def create():
+def new():
     if request.method == 'POST':
-        region = request.form['region']
+        region = request.form['region'].lower()
         realm = request.form['realm']
-        name = request.form['name']
+        char_name = request.form['char_name']
 
         error = None
 
-        if not region in ['eu','us']:
+        if not region in ['eu','us', 'EU', 'us']:
             error = 'Incorrect region selected. Only EU and US allowed.'
+
+        db = get_db()
+        chars = db.execute('SELECT region, realm, char_name, score FROM wow_char').fetchall()
+
+        for row in chars:
+            if ((region==row[0]) and (realm==row[1]) and (char_name==row[2])):
+                error = "Character already loaded."
+
+        from . import raider_calc
+        score = raider_calc.GetScore(region, realm, char_name)
 
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (region, realm, character)'
-                ' VALUES (?, ?, ?)',
-                (title, body, g.user['id'])
+                'INSERT INTO wow_char (region, realm, char_name, score, author_id)'
+                ' VALUES (?, ?, ?, ?, ?)',
+                (region, realm, char_name, score, g.user['id'])
             )
             db.commit()
             return redirect(url_for('raider_io.index'))

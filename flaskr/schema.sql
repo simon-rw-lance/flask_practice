@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS wow_char;
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,5 +24,6 @@ CREATE TABLE wow_char (
   region TEXT NOT NULL,
   realm TEXT NOT NULL,
   char_name TEXT NOT NULL,
+  score FLOAT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 )
