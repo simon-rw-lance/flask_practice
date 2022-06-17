@@ -28,7 +28,7 @@ def new():
 
         error = None
 
-        if not region in ['eu','us', 'EU', 'us']:
+        if not region in ['eu','us', 'EU', 'US']:
             error = 'Incorrect region selected. Only EU and US allowed.'
 
         db = get_db()
@@ -39,7 +39,14 @@ def new():
                 error = "Character already loaded."
 
         from . import raider_calc
-        score = raider_calc.GetScore(region, realm, char_name)
+        # First attempt at catching errors with the API call. More specific ones should
+        # be added to the function raider_calc itself when that is rewritten.
+        try:
+            score = raider_calc.GetScore(region, realm, char_name)
+        except:
+            error = "Issue detected with API call. Please check the information provided."
+        else:
+            score = raider_calc.GetScore(region, realm, char_name)
 
         if error is not None:
             flash(error)

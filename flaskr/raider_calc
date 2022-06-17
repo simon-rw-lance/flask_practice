@@ -1,9 +1,0 @@
-# import numpy as np
-# import pandas as pd
-# import requests
-
-response = requests.get(f"https://raider.io/api/v1/characters/profile?region={region}&realm={realm}&name={char_name}&fields=mythic_plus_best_runs%2Cmythic_plus_alternate_runs")
-data = response.json()
-
-best = pd.DataFrame(data['mythic_plus_best_runs'])
-alternate = pd.DataFrame(data['mythic_plus_alternate_runs'])
