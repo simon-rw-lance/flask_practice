@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Scores{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('raider_io.new') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for wow_char in wow_chars %}
+    <article class="post">
+      <h1>{{ wow_char['region'], wow_char['realm'], wow_char['char_name'], wow_char['score'] }}</h1>
+    </article>
+  {% endfor %}
+{% endblock %}

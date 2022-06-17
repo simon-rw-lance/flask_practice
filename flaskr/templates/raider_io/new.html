@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Character{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="region">Region</label>
+    <input name="region" id="title" value="{{ request.form['region'] }}" required>
+    <label for="realm">Realm</label>
+    <input name="realm" id="realm" value="{{ request.form['realm'] }}" required>
+    <label for="character">Character</label>
+    <input name="char_name" id="char_name" value="{{ request.form['char_name'] }}" required>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}
