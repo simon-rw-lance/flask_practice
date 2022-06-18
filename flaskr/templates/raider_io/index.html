@@ -10,7 +10,12 @@
 {% block content %}
   {% for wow_char in wow_chars %}
     <article class="post">
-      <h1>{{ wow_char['region'], wow_char['realm'], wow_char['char_name'], wow_char['score'] }}</h1>
+      <header>
+        <div>
+          <h1>{{wow_char['char_name']}} - {{wow_char['realm']}}</h1>
+        </div>
+      </header>
+      <p class="body">M+ Score: {{ wow_char['score'] }}</p>
     </article>
   {% endfor %}
 {% endblock %}

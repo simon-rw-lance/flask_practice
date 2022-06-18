@@ -1,12 +1,10 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - Flaskr</title>
+<title>{% block title %}{% endblock %} - Simon R. W. Lance</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <nav>
-  <h1>Flaskr</h1>
+  <h1>Simon R. W. Lance - Personal Website</h1>
   <ul>
-    <li><a href="{{ url_for('blog.index') }}">Home</a>
-    <li><a href="{{ url_for('raider_io.index') }}">WoW Scores</a>
     {% if g.user %}
       <li><span>{{ g.user['username'] }}</span>
       <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
@@ -14,6 +12,12 @@
       <li><a href="{{ url_for('auth.register') }}">Register</a>
       <li><a href="{{ url_for('auth.login') }}">Log In</a>
     {% endif %}
+  </ul>
+</nav>
+<nav>
+  <ul>
+    <li><a href="{{ url_for('blog.index') }}">Home</a>
+    <li><a href="{{ url_for('raider_io.index') }}">WoW Scores</a>
   </ul>
 </nav>
 <section class="content">
