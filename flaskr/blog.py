@@ -8,7 +8,7 @@ from flaskr.db import get_db
 
 bp = Blueprint('blog', __name__)
 
-@bp.route('/')
+@bp.route('/blog')
 def index():
     db = get_db()
     posts = db.execute(
@@ -18,7 +18,7 @@ def index():
     ).fetchall()
     return render_template('blog/index.html', posts=posts)
 
-@bp.route('/create', methods=('GET', 'POST'))
+@bp.route('/blog/create', methods=('GET', 'POST'))
 @login_required
 def create():
     if request.method == 'POST':
@@ -59,7 +59,7 @@ def get_post(id, check_author=True):
 
     return post
 
-@bp.route('/<int:id>/update', methods=('GET', 'POST'))
+@bp.route('/blog/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
     post = get_post(id)
@@ -86,7 +86,7 @@ def update(id):
 
     return render_template('blog/update.html', post=post)
 
-@bp.route('/<int:id>/delete', methods=('POST',))
+@bp.route('/blog/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
     get_post(id)
